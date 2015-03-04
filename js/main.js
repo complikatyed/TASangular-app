@@ -1,6 +1,6 @@
 angular
   .module('tas', [])
-  .controller('TasController', function () {
+  .controller('TasController', function ($scope) {
     var vm = this;
 
     vm.data = [
@@ -9,35 +9,40 @@ angular
         name: 'Adam',
         firstName: 'Adam',
         lastName: 'Kèésecker',
-        current: true
+        current: true,
+        cohort: 5
       },
       {
         nickName: 'ZAdam',
         name: 'Adam',
         firstName: 'Zöe',
         lastName: 'Ames',
-        current: true
+        current: true,
+        cohort: 6
       },
       {
         nickName: 'JuAdam',
         name: 'Adam',
         firstName: 'Juan',
         lastName: 'Rødrįguež',
-        current: true
+        current: true,
+        cohort: 6
       },
       {
         nickName: 'BrAdam',
         name: 'Adam',
         firstName: 'Brian',
         lastName: 'Hiått',
-        current: false
+        current: false,
+        cohort: 6
       },
       {
         nickName: 'BAdam',
         name: 'Adam',
         firstName: 'Adam',
         lastName: 'Barñhærd',
-        current: false
+        current: false,
+        cohort: 6
       }
     ];
 
@@ -56,6 +61,7 @@ angular
 
     function _clearNewTA() {
       vm.newTA = {};
+      $scope.newTA.$setPristine();
     }
 
   });
