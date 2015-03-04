@@ -42,22 +42,20 @@ angular
     ];
 
     vm.addTA = function () {
-      var obj = {
-        nickName: vm.newName,
-        firstName: vm.newFirstName,
-        lastName: vm.newLastName
-      };
+      vm.newTA.name = 'Adam';
+      vm.newTA.nickName = vm.newTA.firstName[0].toUpperCase() + 'Adam';
 
-      vm.data.push(obj);
-
-      vm.newName = null;
-      vm.newFirstName = null;
-      vm.newLastName = null;
-    }
+      vm.data.push(vm.newTA);
+      _clearNewTA();
+    };
 
     vm.removeTA = function (person) {
       var index = vm.data.indexOf(person);
       vm.data.splice(index, 1);
     };
+
+    function _clearNewTA() {
+      vm.newTA = {};
+    }
 
   });
