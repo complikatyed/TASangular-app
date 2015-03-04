@@ -15,9 +15,13 @@
 
     <div class="container" ng-controller="TasController as tas">
       <h1>My TAddress Book</h1>
-      New TA:
-      <input ng-model="tas.newName">
-      <button ng-click="tas.addTA()">Save</button>
+      <form ng-submit="tas.addTA()">
+        <label>Enter your TA's info:</label>
+        <input  class="reset" ng-model="tas.newName" placeholder="Nick Name">
+        <input  class="reset" ng-model="tas.newFirstName" placeholder="First Name">
+        <input  class="reset" ng-model="tas.newLastName" placeholder="Last Name">
+        <input type="submit" value="Save"></button>
+      </form>
       <br>
       Search: <input ng-model="friendFilterQuery">
       <br>
