@@ -14,26 +14,38 @@
     <![endif]-->
 
     <div class="container" ng-controller="TasController as tas">
+      <h1>My TAddress Book</h1>
       New TA:
-      <input ng-model="newTAName">
-      <button ng-click="tas.data.push(newTAName)">Save</button>
+      <input ng-model="tas.newName">
+      <button ng-click="tas.addTA()">Save</button>
       <br>
       Search: <input ng-model="friendFilterQuery">
       <br>
       Sort:
       <button ng-click="friendReverse=!friendReverse">Change Sort</button>
       <br>
-      <div class="hellofriends" ng-repeat="name in tas.data
-         | filter:friendFilterQuery
-         | orderBy:'':friendReverse">
-        <h1 style="display: inline">{{name | uppercase}}</h1>
-        <button ng-click="tas.removeTA(name)">X</button>
-      </div>
+      <table class="table table-striped">
+        <tbody>
+          <th>Nick Name</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Remove</th>
+          <tr class="hellofriends" ng-repeat="person in tas.data
+             | filter:friendFilterQuery
+             | orderBy:['current','-nickName']:friendReverse">
+            <td>{{person.nickName | uppercase}}</td>
+            <td>{{person.firstName}}</td>
+            <td>{{person.lastName}}</td>
+            <td>
+              <button ng-click="tas.removeTA(person)">Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
-
 
