@@ -1,9 +1,10 @@
 angular
   .module('tas', [])
-  .controller('TasController', function ($scope) {
+  .controller('TasController', function ($scope, $http) {
     var vm = this;
 
-    vm.data = [
+    $http.put('https://angularmc.firebaseio.com/tas.json',
+    [
       {
         nickName: 'TAdam',
         name: 'Adam',
@@ -44,7 +45,14 @@ angular
         current: false,
         cohort: 6
       }
-    ];
+    ]);
+
+    $http
+      .get('https://angularmc.firebaseio.com/tas.json')
+      .success(function (data){
+        vm.data = data;
+      });
+
 
     vm.addTA = function () {
       vm.newTA.name = 'Adam';
