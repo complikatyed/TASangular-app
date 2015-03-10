@@ -47,17 +47,11 @@ angular
 
     return tas;
   })
-  .controller('EditController', function ($routeParams, $http, $location) {
+  .controller('EditController', function ($routeParams, $http, $location, taService) {
     var vm = this,
         id = $routeParams.uuid;
 
-    // $http
-    //   .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
-    //   .success(function (data) {
-    //     vm.newTA = data;
-    // });
-
-    tas.findOne(id, function(ta){
+    taService.findOne(id, function(ta){
       vm.newTA = ta;
     })
 
@@ -83,11 +77,6 @@ angular
   .controller('TasController', function ($scope, $http, $location, taService) {
     var vm = this;
 
-    // $http
-    //   .get('https://angularmc.firebaseio.com/tas.json')
-    //   .success(function (data){
-    //     vm.data = data;
-    //   });
     taService.findAll(function (tas) {
       vm.data = tas;
     })
