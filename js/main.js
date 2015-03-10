@@ -53,6 +53,16 @@ angular
         });
     };
 
+    tas.delete = function (id, cb) {
+      var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
+
+      $http
+        .delete(url)
+        .success(function () {
+          cb();
+        });
+    };
+
     return tas;
   })
   .controller('EditController', function ($routeParams, $http, $location, taService) {
@@ -93,12 +103,6 @@ angular
       vm.newTA.name = 'Adam';
       vm.newTA.nickName = vm.newTA.firstName[0].toUpperCase() + 'Adam';
 
-      // $http
-      //   .post('https://angularmc.firebaseio.com/tas.json', vm.newTA)
-      //   .success(function (res) {
-      //     vm.data[res.name] = vm.newTA;
-      //     $location.path('/tas')
-      //   });
       taService.create(vm.newTA, function(res) {
         vm.data[res.name] = vm.newTA;
         $location.path('/tas')
@@ -106,12 +110,16 @@ angular
     };
 
     vm.removeTA = function (id) {
-      var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
-      $http
-        .delete(url)
-        .success(function () {
-          delete vm.data[id];
-        });
+      // var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
+      // $http
+      //   .delete(url)
+      //   .success(function () {
+      //     delete vm.data[id];
+      //   });
+
+      taService.delete(id, function () {
+        delete vm.data[id];
+      });
     };
 
     vm.updateTA = function (id) {
