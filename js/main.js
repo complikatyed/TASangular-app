@@ -45,6 +45,14 @@ angular
         });
     };
 
+    tas.create = function (data, cb) {
+      $http
+        .post('https://angularmc.firebaseio.com/tas.json', data)
+        .success(function (res) {
+          cb(res);
+        });
+    };
+
     return tas;
   })
   .controller('EditController', function ($routeParams, $http, $location, taService) {
@@ -85,12 +93,16 @@ angular
       vm.newTA.name = 'Adam';
       vm.newTA.nickName = vm.newTA.firstName[0].toUpperCase() + 'Adam';
 
-      $http
-        .post('https://angularmc.firebaseio.com/tas.json', vm.newTA)
-        .success(function (res) {
-          vm.data[res.name] = vm.newTA;
-          $location.path('/tas')
-        });
+      // $http
+      //   .post('https://angularmc.firebaseio.com/tas.json', vm.newTA)
+      //   .success(function (res) {
+      //     vm.data[res.name] = vm.newTA;
+      //     $location.path('/tas')
+      //   });
+      taService.create(vm.newTA, function(res) {
+        vm.data[res.name] = vm.newTA;
+        $location.path('/tas')
+      });
     };
 
     vm.removeTA = function (id) {
