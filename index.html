@@ -15,80 +15,12 @@
 
     <div class="container" ng-controller="TasController as tas">
       <h1>My TAddress Book</h1>
-      <form name="tas.newTAForm" ng-submit="tas.addTA()" novalidate>
-        <div class="form-group" ng-class="{'has-error': tas.newTAForm.$dirty}">
-          <label class="control-label">First:</label>
-          <input class="form-control" ng-model="tas.newTA.firstName" required>
-          <span class="helpBlock" class="help-block"  ng-show="tas.newTAForm.$invalid && tas.newTAForm.$dirty">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-        </div>
-        <div class="form-group" ng-class="{'has-error': tas.newTAForm.$dirty}">
-          <label class="control-label">Last:</label>
-          <input class="form-control" ng-model="tas.newTA.lastName" required>
-          <span class="helpBlock" class="help-block"  ng-show="tas.newTAForm.$invalid && tas.newTAForm.$dirty">A block of help text that breaks onto a new line and may extend beyond one line.</span>
-        </div>
-        <div class="form-group">
-          <label class="control-label">Cohort:</label>
-          <select class="form-control" ng-model="tas.newTA.cohort">
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-            <option value="4">Four</option>
-            <option value="5">Five</option>
-            <option value="6">Six</option>
-            <option value="7">Seven</option>
-            <option value="8">Eight</option>
-            <option value="9">Nine</option>
-            <option value="10">Ten</option>
-          </select>
-        </div>
-        <div ng-class="{'has-error': tas.newTAForm.$dirty}">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" ng-model="tas.newTA.current">
-              Current
-            </label>
-          </div>
-        </div>
-        <input class="btn" ng-class="{'btn-danger': tas.newTAForm.$invalid, 'btn-success': tas.newTAForm.$valid}" ng-disabled="tas.newTAForm.$invalid" type="submit" value="Save">
-      </form>
-
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Nick Name</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Cohort</th>
-            <th>Current</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="hellofriends" ng-repeat="(id, person) in tas.data
-            | filter:friendFilterQuery
-            | orderBy:['current','-nickName']:friendReverse">
-            <td>
-              <span ng-hide="tas[id].editing" ng-dblclick="tas[id].editing=true">{{person.name}}</span>
-              <input ng-show="tas[id].editing" ng-model="person.name">
-            </td>
-            <td>{{person.nickName | uppercase}}</td>
-            <td>{{person.firstName}}</td>
-            <td>{{person.lastName}}</td>
-            <td>{{person.cohort}}</td>
-            <td><input type="checkbox" ng-change="tas.updateTA(id)" ng-model="person.current"></td>
-            <td>
-              <button ng-click="tas.removeTA(id)">X</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      Search: <input ng-model="friendFilterQuery">
-      <br>
-      Sort:
-      <button ng-click="friendReverse=!friendReverse">Change Sort</button>
+      <div ng-include="'views/form.html'"></div>
+      <div ng-include="'views/table.html'"></div>
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"</script>
     <script src="js/main.js"></script>
   </body>
 </html>

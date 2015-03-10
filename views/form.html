@@ -1,0 +1,36 @@
+<form name="tas.newTAForm" ng-submit="tas.addTA()" novalidate>
+  <div class="form-group" ng-class="{'has-error': tas.newTAForm.$dirty}">
+    <label class="control-label">First:</label>
+    <input class="form-control" ng-model="tas.newTA.firstName" required>
+    <span class="helpBlock" class="help-block"  ng-show="tas.newTAForm.$invalid && tas.newTAForm.$dirty">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+  </div>
+  <div class="form-group" ng-class="{'has-error': tas.newTAForm.$dirty}">
+    <label class="control-label">Last:</label>
+    <input class="form-control" ng-model="tas.newTA.lastName" required>
+    <span class="helpBlock" class="help-block"  ng-show="tas.newTAForm.$invalid && tas.newTAForm.$dirty">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+  </div>
+  <div class="form-group">
+    <label class="control-label">Cohort:</label>
+    <select class="form-control" ng-model="tas.newTA.cohort">
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+      <option value="4">Four</option>
+      <option value="5">Five</option>
+      <option value="6">Six</option>
+      <option value="7">Seven</option>
+      <option value="8">Eight</option>
+      <option value="9">Nine</option>
+      <option value="10">Ten</option>
+    </select>
+  </div>
+  <div ng-class="{'has-error': tas.newTAForm.$dirty}">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="tas.newTA.current">
+        Current
+      </label>
+    </div>
+  </div>
+  <input class="btn" ng-class="{'btn-danger': tas.newTAForm.$invalid, 'btn-success': tas.newTAForm.$valid}" ng-disabled="tas.newTAForm.$invalid" type="submit" value="Save">
+</form>
