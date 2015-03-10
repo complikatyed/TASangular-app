@@ -1,5 +1,17 @@
 angular
-  .module('tas', [])
+  .module('tas', ['ngRoute'])
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: 'views/table.html'
+      })
+      .when('/new', {
+        templateUrl: 'views/form.html'
+      })
+      .otherwise({
+        redirectTo: '/'
+      })
+  })
   .controller('TasController', function ($scope, $http) {
     var vm = this;
 

@@ -14,13 +14,13 @@
     <![endif]-->
 
     <div class="container" ng-controller="TasController as tas">
-      <h1>My TAddress Book</h1>
-      <div ng-include="'views/form.html'"></div>
-      <div ng-include="'views/table.html'"></div>
+      <h1><a href="/#/">My TAddress Book</a></h1>
+      <a class="btn btn-primary" href="/#/new">New TA</a>
+      <div ng-view></div>
     </div>
 
     <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"</script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>
