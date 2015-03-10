@@ -3,10 +3,14 @@ angular
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/table.html'
+        templateUrl: 'views/table.html',
+        controller: 'TasController',
+        controllerAs: 'tas'
       })
       .when('/new', {
         templateUrl: 'views/form.html'
+        controller: 'TasController',
+        controllerAs: 'tas'
       })
       .otherwise({
         redirectTo: '/'
