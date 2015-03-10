@@ -26,15 +26,32 @@ angular
         redirectTo: '/tas'
       })
   })
+  .service('taService', function ($http) {
+    var tas = {};
+
+    tas.findOne = function (id, cb) {
+      $http
+        .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
+        .success(function (data) {
+          cb(data)
+      });
+    };
+
+    return tas;
+  })
   .controller('EditController', function ($routeParams, $http, $location) {
     var vm = this,
         id = $routeParams.uuid;
 
-    $http
-      .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
-      .success(function (data) {
-        vm.newTA = data;
-    });
+    // $http
+    //   .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
+    //   .success(function (data) {
+    //     vm.newTA = data;
+    // });
+
+    tas.findOne(id, function(ta){
+      vm.newTA = ta;
+    })
 
     vm.addOrEditTA = function () {
       $http
@@ -46,15 +63,19 @@ angular
       });
     }
   })
-  .controller('ShowController', function ($routeParams, $http) {
+  .controller('ShowController', function ($routeParams, taService) {
     var vm = this,
         id = $routeParams.uuid;
 
-    $http
-      .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
-      .success(function (data) {
-        vm.ta = data;
-      });
+    // $http
+    //   .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
+    //   .success(function (data) {
+    //     vm.ta = data;
+    //   });
+    taService.findOne(id, function (ta) {
+      vm.ta = ta;
+    });
+
   })
   .controller('TasController', function ($scope, $http, $location) {
     var vm = this;
@@ -75,13 +96,10 @@ angular
         .success(function (res) {
           vm.data[res.name] = vm.newTA;
           $location.path('/tas')
-          // _clearNewTA();
         });
     };
 
     vm.removeTA = function (id) {
-      // var index = vm.data.indexOf(person);
-      // vm.data.splice(index, 1);
       var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
       $http
         .delete(url)
@@ -95,10 +113,4 @@ angular
       $http
         .put(url, vm.data[id]);
     };
-
-    // function _clearNewTA() {
-    //   vm.newTA = {};
-    //   $scope.newTA.$setPristine();
-    // }
-
   });

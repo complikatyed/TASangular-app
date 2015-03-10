@@ -25,6 +25,7 @@
       <td>{{person.cohort}}</td>
       <td><input type="checkbox" ng-change="tas.updateTA(id)" ng-model="person.current"></td>
       <td>
+        <a class="btn btn-default" href="/#/tas/{{id}}/edit">Edit</a>
         <a class="btn btn-default" href="/#/tas/{{id}}">View</a>
         <button class="btn btn-warning" ng-click="tas.removeTA(id)">X</button>
       </td>
