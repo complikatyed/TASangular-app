@@ -2,18 +2,33 @@ angular
   .module('tas', ['ngRoute'])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/tas', {
         templateUrl: 'views/table.html',
         controller: 'TasController',
         controllerAs: 'tas'
       })
-      .when('/new', {
+      .when('/tas/new', {
         templateUrl: 'views/form.html',
         controller: 'TasController',
         controllerAs: 'tas'
       })
+      .when('/tas/:uuid', {
+        templateUrl: 'views/show.html',
+        controller: 'ShowController',
+        controllerAs: 'show'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/tas'
+      })
+  })
+  .controller('ShowController', function ($routeParams, $http) {
+    var vm = this,
+        id = $routeParams.uuid;
+
+    $http
+      .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
+      .success(function (data) {
+        vm.ta = data;
       })
   })
   .controller('TasController', function ($scope, $http) {
