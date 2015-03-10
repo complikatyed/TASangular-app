@@ -8,7 +8,7 @@ angular
         controllerAs: 'tas'
       })
       .when('/new', {
-        templateUrl: 'views/form.html'
+        templateUrl: 'views/form.html',
         controller: 'TasController',
         controllerAs: 'tas'
       })
