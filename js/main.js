@@ -63,11 +63,16 @@ angular
         });
     };
 
-    tas.update = function (id, data) {
+    tas.update = function (id, data, cb) {
       var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
 
       $http
-        .put(url, data);
+        .put(url, data)
+        .success(function (res) {
+          if (typeof cb === 'function') {
+            cb(res);
+          }
+        });
     };
 
     return tas;
@@ -81,13 +86,16 @@ angular
     })
 
     vm.addOrEditTA = function () {
-      $http
-        .put('https://angularmc.firebaseio.com/tas/' + id + '.json',
-          vm.newTA
-        )
-        .success(function (data) {
-          $location.path('/tas')
-      });
+      // $http
+      //   .put('https://angularmc.firebaseio.com/tas/' + id + '.json',
+      //     vm.newTA
+      //   )
+      //   .success(function (data) {
+      //     $location.path('/tas')
+      //   });
+      taService.update(id, vm.newTA, function () {
+        $location.path('/tas')
+      })
     }
   })
   .controller('ShowController', function ($routeParams, taService) {
@@ -99,7 +107,7 @@ angular
     });
 
   })
-  .controller('TasController', function ($scope, $http, $location, taService) {
+  .controller('TasController', function ($location, taService) {
     var vm = this;
 
     taService.findAll(function (tas) {
@@ -123,9 +131,6 @@ angular
     };
 
     vm.updateTA = function (id) {
-      // var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
-      // $http
-      //   .put(url, vm.data[id]);
       taService.update(id, vm.data[id]);
     };
   });
