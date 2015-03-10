@@ -10,6 +10,10 @@
     <span class="helpBlock" class="help-block"  ng-show="tas.newTAForm.$invalid && tas.newTAForm.$dirty">A block of help text that breaks onto a new line and may extend beyond one line.</span>
   </div>
   <div class="form-group">
+    <label class="control-label">Image URL:</label>
+    <input class="form-control" ng-model="tas.newTA.image" required>
+  </div>
+  <div class="form-group">
     <label class="control-label">Cohort:</label>
     <select class="form-control" ng-model="tas.newTA.cohort">
       <option value="1">One</option>

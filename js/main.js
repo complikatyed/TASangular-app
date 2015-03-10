@@ -114,6 +114,10 @@ angular
         .put(url, vm.data[id]);
     };
 
+    vm.editTA = function (person) {
+
+    };
+
     function _clearNewTA() {
       vm.newTA = {};
       $scope.newTA.$setPristine();
