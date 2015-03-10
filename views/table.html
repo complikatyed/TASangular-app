@@ -14,7 +14,7 @@
     <tr class="hellofriends" ng-repeat="(id, person) in tas.data
       | filter:friendFilterQuery
       | orderBy:['current','-nickName']:friendReverse">
-      <td><img src="{{person.image}}"></td>
+      <td><img ng-src="{{person.image}}"></td>
       <td>
         <span ng-hide="tas[id].editing" ng-dblclick="tas[id].editing=true">{{person.name}}</span>
         <input ng-show="tas[id].editing" ng-model="person.name">

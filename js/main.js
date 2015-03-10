@@ -17,9 +17,34 @@ angular
         controller: 'ShowController',
         controllerAs: 'show'
       })
+      .when('/tas/:uuid/edit', {
+        templateUrl: 'views/form.html',
+        controller: 'EditController',
+        controllerAs: 'tas'
+      })
       .otherwise({
         redirectTo: '/tas'
       })
+  })
+  .controller('EditController', function ($routeParams, $http, $location) {
+    var vm = this,
+        id = $routeParams.uuid;
+
+    $http
+      .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
+      .success(function (data) {
+        vm.newTA = data;
+    });
+
+    vm.addOrEditTA = function () {
+      $http
+        .put('https://angularmc.firebaseio.com/tas/' + id + '.json',
+          vm.newTA
+        )
+        .success(function (data) {
+          $location.path('/tas')
+      });
+    }
   })
   .controller('ShowController', function ($routeParams, $http) {
     var vm = this,
@@ -29,54 +54,10 @@ angular
       .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
       .success(function (data) {
         vm.ta = data;
-      })
+      });
   })
-  .controller('TasController', function ($scope, $http) {
+  .controller('TasController', function ($scope, $http, $location) {
     var vm = this;
-
-    // $http.put('https://angularmc.firebaseio.com/tas.json',
-    // [
-    //   {
-    //     nickName: 'TAdam',
-    //     name: 'Adam',
-    //     firstName: 'Adam',
-    //     lastName: 'Kèésecker',
-    //     current: true,
-    //     cohort: 5
-    //   },
-    //   {
-    //     nickName: 'ZAdam',
-    //     name: 'Adam',
-    //     firstName: 'Zöe',
-    //     lastName: 'Ames',
-    //     current: true,
-    //     cohort: 6
-    //   },
-    //   {
-    //     nickName: 'JuAdam',
-    //     name: 'Adam',
-    //     firstName: 'Juan',
-    //     lastName: 'Rødrįguež',
-    //     current: true,
-    //     cohort: 6
-    //   },
-    //   {
-    //     nickName: 'BrAdam',
-    //     name: 'Adam',
-    //     firstName: 'Brian',
-    //     lastName: 'Hiått',
-    //     current: false,
-    //     cohort: 6
-    //   },
-    //   {
-    //     nickName: 'BAdam',
-    //     name: 'Adam',
-    //     firstName: 'Adam',
-    //     lastName: 'Barñhærd',
-    //     current: false,
-    //     cohort: 6
-    //   }
-    // ]);
 
     $http
       .get('https://angularmc.firebaseio.com/tas.json')
@@ -85,7 +66,7 @@ angular
       });
 
 
-    vm.addTA = function () {
+    vm.addOrEditTA = function () {
       vm.newTA.name = 'Adam';
       vm.newTA.nickName = vm.newTA.firstName[0].toUpperCase() + 'Adam';
 
@@ -93,7 +74,8 @@ angular
         .post('https://angularmc.firebaseio.com/tas.json', vm.newTA)
         .success(function (res) {
           vm.data[res.name] = vm.newTA;
-          _clearNewTA();
+          $location.path('/tas')
+          // _clearNewTA();
         });
     };
 
@@ -114,13 +96,9 @@ angular
         .put(url, vm.data[id]);
     };
 
-    vm.editTA = function (person) {
-
-    };
-
-    function _clearNewTA() {
-      vm.newTA = {};
-      $scope.newTA.$setPristine();
-    }
+    // function _clearNewTA() {
+    //   vm.newTA = {};
+    //   $scope.newTA.$setPristine();
+    // }
 
   });
