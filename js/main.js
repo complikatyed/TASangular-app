@@ -37,6 +37,14 @@ angular
       });
     };
 
+    tas.findAll = function (cb) {
+      $http
+        .get('https://angularmc.firebaseio.com/tas.json')
+        .success(function (data){
+          cb(data);
+        });
+    };
+
     return tas;
   })
   .controller('EditController', function ($routeParams, $http, $location) {
@@ -67,25 +75,22 @@ angular
     var vm = this,
         id = $routeParams.uuid;
 
-    // $http
-    //   .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
-    //   .success(function (data) {
-    //     vm.ta = data;
-    //   });
     taService.findOne(id, function (ta) {
       vm.ta = ta;
     });
 
   })
-  .controller('TasController', function ($scope, $http, $location) {
+  .controller('TasController', function ($scope, $http, $location, taService) {
     var vm = this;
 
-    $http
-      .get('https://angularmc.firebaseio.com/tas.json')
-      .success(function (data){
-        vm.data = data;
-      });
-
+    // $http
+    //   .get('https://angularmc.firebaseio.com/tas.json')
+    //   .success(function (data){
+    //     vm.data = data;
+    //   });
+    taService.findAll(function (tas) {
+      vm.data = tas;
+    })
 
     vm.addOrEditTA = function () {
       vm.newTA.name = 'Adam';
