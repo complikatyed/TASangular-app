@@ -34,7 +34,7 @@ angular
         .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
         .success(function (data) {
           cb(data)
-      });
+        });
     };
 
     tas.findAll = function (cb) {
@@ -77,7 +77,7 @@ angular
 
     return tas;
   })
-  .controller('EditController', function ($routeParams, $http, $location, taService) {
+  .controller('EditController', function ($routeParams, $location, taService) {
     var vm = this,
         id = $routeParams.uuid;
 
@@ -86,13 +86,6 @@ angular
     })
 
     vm.addOrEditTA = function () {
-      // $http
-      //   .put('https://angularmc.firebaseio.com/tas/' + id + '.json',
-      //     vm.newTA
-      //   )
-      //   .success(function (data) {
-      //     $location.path('/tas')
-      //   });
       taService.update(id, vm.newTA, function () {
         $location.path('/tas')
       })
