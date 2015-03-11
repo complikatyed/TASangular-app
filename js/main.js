@@ -26,7 +26,7 @@ angular
         redirectTo: '/tas'
       })
   })
-  .service('taService', function ($http) {
+  .factory('taFactory', function ($http) {
     var tas = {};
 
     tas.findOne = function (id, cb) {
@@ -77,33 +77,33 @@ angular
 
     return tas;
   })
-  .controller('EditController', function ($routeParams, $location, taService) {
+  .controller('EditController', function ($routeParams, $location, taFactory) {
     var vm = this,
         id = $routeParams.uuid;
 
-    taService.findOne(id, function(ta){
+    taFactory.findOne(id, function(ta){
       vm.newTA = ta;
     })
 
     vm.addOrEditTA = function () {
-      taService.update(id, vm.newTA, function () {
+      taFactory.update(id, vm.newTA, function () {
         $location.path('/tas')
       })
     }
   })
-  .controller('ShowController', function ($routeParams, taService) {
+  .controller('ShowController', function ($routeParams, taFactory) {
     var vm = this,
         id = $routeParams.uuid;
 
-    taService.findOne(id, function (ta) {
+    taFactory.findOne(id, function (ta) {
       vm.ta = ta;
     });
 
   })
-  .controller('TasController', function ($location, taService) {
+  .controller('TasController', function ($location, taFactory) {
     var vm = this;
 
-    taService.findAll(function (tas) {
+    taFactory.findAll(function (tas) {
       vm.data = tas;
     })
 
@@ -111,19 +111,19 @@ angular
       vm.newTA.name = 'Adam';
       vm.newTA.nickName = vm.newTA.firstName[0].toUpperCase() + 'Adam';
 
-      taService.create(vm.newTA, function(res) {
+      taFactory.create(vm.newTA, function(res) {
         vm.data[res.name] = vm.newTA;
         $location.path('/tas')
       });
     };
 
     vm.removeTA = function (id) {
-      taService.delete(id, function () {
+      taFactory.delete(id, function () {
         delete vm.data[id];
       });
     };
 
     vm.updateTA = function (id) {
-      taService.update(id, vm.data[id]);
+      taFactory.update(id, vm.data[id]);
     };
   });
