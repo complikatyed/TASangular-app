@@ -40,4 +40,19 @@ function AuthController ($scope, $location, BASE_URL) {
       }
     });
   };
+
+  vm.forgotPassword = function () {
+    var fb = new Firebase (BASE_URL);
+
+    fb.resetPassword({
+      email:    vm.email,
+      password: vm.password
+    }, function (err) {
+      if (err){
+        console.log('Error resetting password:', err);
+      } else {
+        console.log('Password reset email sent successfully');
+      }
+    });
+  }
 }
