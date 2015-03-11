@@ -26,12 +26,13 @@ angular
         redirectTo: '/tas'
       })
   })
-  .factory('taFactory', function ($http) {
+  .value('BASE_URL', 'https://angularmc.firebaseio.com')
+  .factory('taFactory', function ($http, BASE_URL) {
     var tas = {};
 
     tas.findOne = function (id, cb) {
       $http
-        .get('https://angularmc.firebaseio.com/tas/' + id + '.json')
+        .get(BASE_URL + '/tas/' + id + '.json')
         .success(function (data) {
           cb(data)
         });
@@ -39,7 +40,7 @@ angular
 
     tas.findAll = function (cb) {
       $http
-        .get('https://angularmc.firebaseio.com/tas.json')
+        .get(BASE_URL + '/tas.json')
         .success(function (data){
           cb(data);
         });
@@ -47,14 +48,14 @@ angular
 
     tas.create = function (data, cb) {
       $http
-        .post('https://angularmc.firebaseio.com/tas.json', data)
+        .post(BASE_URL + '/tas.json', data)
         .success(function (res) {
           cb(res);
         });
     };
 
     tas.delete = function (id, cb) {
-      var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
+      var url = BASE_URL + '/tas/' + id + '.json';
 
       $http
         .delete(url)
@@ -64,7 +65,7 @@ angular
     };
 
     tas.update = function (id, data, cb) {
-      var url = 'https://angularmc.firebaseio.com/tas/' + id + '.json';
+      var url = BASE_URL + '/tas/' + id + '.json';
 
       $http
         .put(url, data)
