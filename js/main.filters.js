@@ -2,9 +2,12 @@ angular
   .module('tas')
   .filter('objToArr', function () {
     return function (obj) {
-      return Object.keys(obj).map(function (key) {
-        return obj[key];
-      });
+      if (obj) {
+        return Object.keys(obj).map(function (key) {
+          obj[key]['_id'] = key;
+          return obj[key];
+        });
+      }
     };
   })
   .filter('toRansomCase', function () {
