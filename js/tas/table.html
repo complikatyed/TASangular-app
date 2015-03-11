@@ -13,14 +13,14 @@
   </thead>
   <tbody>
     <tr class="hellofriends" ng-repeat="(id, person) in tas.data
-      | filter:friendFilterQuery
+      | filter:friendFilterQuery | objToArr
       | orderBy:['current','-nickName']:friendReverse">
       <td><img ng-src="{{person.image}}"></td>
       <td>
         <span ng-hide="tas[id].editing" ng-dblclick="tas[id].editing=true">{{person.name}}</span>
         <input ng-show="tas[id].editing" ng-model="person.name">
       </td>
-      <td>{{person.nickName | uppercase}}</td>
+      <td>{{person.nickName | toRansomCase}}</td>
       <td>{{person.firstName}}</td>
       <td>{{person.lastName}}</td>
       <td>{{person.cohort}}</td>
