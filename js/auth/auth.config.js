@@ -2,7 +2,6 @@ angular
   .module('tas')
   .config(authConfig);
 
-
 function authConfig($routeProvider) {
   $routeProvider
     .when('/login', {
@@ -10,4 +9,8 @@ function authConfig($routeProvider) {
       controller: 'AuthController',
       controllerAs: 'auth'
     })
+    .when('/logout', {
+      template: '',
+      controller: 'LogoutController'
+    });
 }

@@ -2,20 +2,20 @@ angular
   .module('tas')
   .controller('AuthController', AuthController)
 
-function AuthController ($scope, $location, BASE_URL) {
+function AuthController($scope, $location, authFactory, BASE_URL) {
   var vm = this;
 
   vm.login = function () {
-    var fb = new Firebase (BASE_URL);
-
-    fb.authWithPassword({
-      email:    vm.email,
+    var user = {
+      email: vm.email,
       password: vm.password
-    }, function (err, authData) {
+    };
+
+    authFactory.login(user, function (err, authData) {
       if (err) {
-        console.log('Login failed!', err);
+        console.log('Error logging in user:', err);
       } else {
-        console.log('Login success!', authData);
+        console.log('Logged in successfully', authData);
         $location.path('/tas');
         $scope.$apply();
       }
@@ -23,13 +23,13 @@ function AuthController ($scope, $location, BASE_URL) {
   };
 
   vm.register = function () {
-    var fb = new Firebase (BASE_URL);
-
-    fb.createUser({
-      email:    vm.email,
+    var user = {
+      email: vm.email,
       password: vm.password
-    }, function (err, authData) {
-      if (err && err.code === 'EMAIL_TAKEN'){
+    };
+
+    authFactory.register(user, function (err, authData) {
+      if (err && err.code === 'EMAIL_TAKEN') {
         console.log('Error creating user:', err);
         vm.login();
       } else if (err) {
@@ -42,17 +42,26 @@ function AuthController ($scope, $location, BASE_URL) {
   };
 
   vm.forgotPassword = function () {
-    var fb = new Firebase (BASE_URL);
+    var fb = new Firebase(BASE_URL);
 
     fb.resetPassword({
       email:    vm.email,
       password: vm.password
     }, function (err) {
-      if (err){
-        console.log('Error resetting password:', err);
+      if (err) {
+        console.log('Error resetting password:', err)
       } else {
         console.log('Password reset email sent successfully');
       }
     });
-  }
+  };
 }
+
+
+
+
+
+
+
+
+
