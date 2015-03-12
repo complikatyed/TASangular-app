@@ -15,7 +15,10 @@
 
     <div class="container">
       <h1><a href="/#/tas">My TAddress Book</a></h1>
-      <a class="btn btn-primary" href="/#/tas/new">New TA</a>
+      <div ng-show="user">
+        <a class="btn btn-primary" href="/#/tas/new">New TA</a>
+        <a class="btn btn-danger" href="/#/logout">Logout: {{user.password.email}}</a>
+      </div>
       <div ng-view></div>
     </div>
 
